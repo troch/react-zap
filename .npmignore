@@ -1,0 +1,5 @@
+/modules
+.*
+*.md
+*.json
+*.config.js
