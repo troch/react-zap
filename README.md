@@ -1,6 +1,6 @@
 # react-zap
 
-Zap props from a component to another, using the new context API!
+Zap props from a component to another, using React new context API and higher-order components (HoCs).
 
 ## Why?
 
