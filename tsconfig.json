@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "es2015"
+        ],
+        "target": "es5",
+        "esModuleInterop": true,
+        "declaration": true,
+        "declarationDir": "./typings",
+        "outDir": "./build",
+        "jsx": "react"
+    },
+    "include": [
+        "./modules/index.ts"
+    ]
+}
