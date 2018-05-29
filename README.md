@@ -1,6 +1,6 @@
 # react-zap
 
-Zap props from a component to another, using React new context API and higher-order components (HoCs).
+:zap: Zap props from a component to another, using React new context API and higher-order components (HoCs) :zap:.
 
 ## Why?
 
@@ -16,12 +16,12 @@ This package offers two higher-order components: `propsToContext` to populate a 
 
 ## API
 
-### `contextToProps(Provider, config?)(BaseComponent)`
+### :zap: `propsToContext(Provider, config?)(BaseComponent)`
 
 *   `Provider`: a React context provider, returned by `React.createContext`
 *   `config`: a list of prop keys to set to context. Alternatively `config` can be an object containing `include` and `exclude`. It is optional and by default all props will be set to context.
 
-### `propsToContext(Consumer)(BaseComponent)`
+### :zap: `contextToProps(Consumer)(BaseComponent)`
 
 Totally optional higher-order component. If you decide to use it, it will spread the context pushed by `Consumer` to `BaseComponent` props. If you prefer to use render functions, use `Consumer` the normal way!
 
