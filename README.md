@@ -1,29 +1,40 @@
 # react-zap
 
-:zap: Zap props from a component to another, using React new context API and higher-order components (HoCs) :zap:.
+:zap: Zap props from one React component to another! :zap:
 
 ## Why?
 
-You might have heard about React's new context API. I you have not read the [official documnetation](https://reactjs.org/docs/context.html) or this [medium article from Kent C. Dodds](https://medium.com/dailyjs/reacts-%EF%B8%8F-new-context-api-70c9fe01596b).
+React's new context API allows you to send data from one component to any component in its tree of children. React-zap lets you tie this powerful new feature in to the similarly powerful concept of higher-order-components!
 
-The React new context API allows you to set and access data (context) without having to pass props all the way down to components which need them. Consumers accept a function as a child, for context data to be passed along: it's a pretty trendy pattern these days which has been called "render props".
+## HoCs _and_ Render Props?
 
-Some people promoting render props have done it by denigrating higher-order components. I use HoCs a lot (really a lot) and for a while I have contemplated React's new context API as something I would be unable to leverage: it is HoCs or render props, make your choice.
+One aspect of the new context API which has been much talked about in the community is that it uses the `function-as-a-child` pattern (also called `render props`) for its Consumers. This pattern has been positioned by some as an alternative to higher-order components, so the general impression is that you need to choose: either use HoCs or use Render Props.
 
-It turns out, **React new context API is about sharing dynamic context**, not about render functions. **HoCs are not dead**! This package allows you to use your trusted and useful HoCs and to plug them to React new context API.
+However, the API is about sharing dynamic context, not about render functions. The ability to pass data directly to any child is applicable to many situations; the method with which you access this data is not relevant to the feature. And in fact, this feature can be combined with higher-order components to make it even more powerful!
 
-This package offers two higher-order components: `propsToContext` to populate a context provider with existing props, and optionally `contextToProps` if you prefer to consume context with a HoC.
+**HoCs are not dead**! This package allows you to use your trusted and useful HoCs and to plug them into React new context API.
+
+This package offers two higher-order components: `propsToContext` to populate a context provider with existing props, and `contextToProps` if you prefer to consume context with a HoC or want to consume context within a `compose` function.
 
 ## API
 
 ### :zap: `propsToContext(Provider, config?)(BaseComponent)`
 
+Wraps your component with the specified `Provider`, and sends the component's props into context. By default, all props will be included in context; you can optionally define a list of props to include, or an object with a list of props to exclude.
+
 *   `Provider`: a React context provider, returned by `React.createContext`
-*   `config`: a list of prop keys to set to context. Alternatively `config` can be an object containing `include` and `exclude`. It is optional and by default all props will be set to context.
+*   `config`:
+    * An array of prop keys to sent to context.
+
+    Example: `propsToContext(Provider, ['someProp'])(Component)`
+
+    * An object containing an array of prop keys to exclude (all props _not_ in this array would then be sent to context).
+
+    Example: `propsToContext(Provider, { exclude: ['someProp'] })(Component)`
 
 ### :zap: `contextToProps(Consumer)(BaseComponent)`
 
-Totally optional higher-order component. If you decide to use it, it will spread the context pushed by `Consumer` to `BaseComponent` props. If you prefer to use render functions, use `Consumer` the normal way!
+Wraps your component with the specified `Consumer`, spreading the context into its props.
 
 ## Examples
 
