@@ -6,11 +6,11 @@ Zap props from a component to another, using React new context API and higher-or
 
 You might have heard about React's new context API. I you have not read the [official documnetation](https://reactjs.org/docs/context.html) or this [medium article from Kent C. Dodds](https://medium.com/dailyjs/reacts-%EF%B8%8F-new-context-api-70c9fe01596b).
 
-The React new context API allows you set and access data (context) without having to pass props all the way down to components which need them. Consumers accept a function as a child, for context data to be passed along: it's a pretty trendy pattern these days which has been called "render props".
+The React new context API allows you to set and access data (context) without having to pass props all the way down to components which need them. Consumers accept a function as a child, for context data to be passed along: it's a pretty trendy pattern these days which has been called "render props".
 
-People promoting render props have done it by trying to shoot down higher-order components. I use HoCs a lot (really a lot) and for a while I have contemplated React's new context API as something I would be unable to leverage: it is HoCs or render props, make your choice.
+Some people promoting render props have done it by denigrating higher-order components. I use HoCs a lot (really a lot) and for a while I have contemplated React's new context API as something I would be unable to leverage: it is HoCs or render props, make your choice.
 
-It turns out, **React new context API is about sharing dynamic context**, not about render functions. **HoCs are not dead**, this package allows you to use your trusted and useful HoCs, and to plug them to React new context API!
+It turns out, **React new context API is about sharing dynamic context**, not about render functions. **HoCs are not dead**! This package allows you to use your trusted and useful HoCs and to plug them to React new context API.
 
 This package offers two higher-order components: `propsToContext` to populate a context provider with existing props, and optionally `contextToProps` if you prefer to consume context with a HoC.
 
