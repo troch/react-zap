@@ -1,20 +1,9 @@
 import * as React from 'react'
 
-function propsToProvider<P>(
-    props: P,
-    include: string[],
-    exclude: string[]
-): Partial<P> {
-    if (!include.length) {
-        return !exclude.length
-            ? props
-            : filterProps<P>(
-                  props,
-                  propName => exclude.indexOf(propName) === -1
-              )
+function createPropsToProvider<P>(include: string[]): (props: P) => Partial<P> {
+    return function (props: P): Partial<P> {
+        return filterProps<P>(props, propName => include.indexOf(propName) !== -1)
     }
-
-    return filterProps<P>(props, propName => include.indexOf(propName) !== -1)
 }
 
 function filterProps<P>(
@@ -32,22 +21,19 @@ function filterProps<P>(
 
 export default function propsToContext<P, C extends P = P>(
     Provider: React.ComponentType<React.ProviderProps<C>>,
-    config?: string[] | { include?: string[]; exclude?: string[] }
+    config?: string[] | ((props: P) => C)
 ) {
     return (BaseComponent: React.ComponentType<P>): React.ComponentClass<P> =>
         class PropsToContext extends React.Component<P> {
-            public include: string[] = []
-            public exclude: string[] = []
+            public propsToProvider = props => props
 
             constructor(props) {
                 super(props)
 
-                if (Array.isArray(config)) {
-                    this.include = config
-                    this.exclude = []
+                if (typeof config === 'function') {
+                    this.propsToProvider = config
                 } else if (config) {
-                    this.include = config.include || []
-                    this.exclude = config.exclude || []
+                    this.propsToProvider = createPropsToProvider(config)
                 }
             }
 
@@ -55,10 +41,8 @@ export default function propsToContext<P, C extends P = P>(
                 return (
                     <Provider
                         value={
-                            propsToProvider(
+                            this.propsToProvider(
                                 this.props,
-                                this.include,
-                                this.exclude
                             ) as C
                         }
                     >
