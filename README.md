@@ -4,7 +4,7 @@
 
 ## Why?
 
-React's new context API allows you to send data from one component to any component in its tree of children. React-zap lets you tie this powerful new feature in to the similarly powerful concept of higher-order-components!
+React's new context API allows you to send data from one component to any component in its tree of children. React-zap lets you tie this powerful new feature in to the similarly powerful concept of higher-order components!
 
 ## HoCs _and_ Render Props?
 
@@ -12,25 +12,25 @@ One aspect of the new context API which has been much talked about in the commun
 
 However, the API is about sharing dynamic context, not about render functions. The ability to pass data directly to any child is applicable to many situations; the method with which you access this data is not relevant to the feature. And in fact, this feature can be combined with higher-order components to make it even more powerful!
 
-**HoCs are not dead**! This package allows you to use your trusted and useful HoCs and to plug them into React new context API.
+**HoCs are not dead**! This package allows you to use your trusted and useful HoCs and to plug them into React's new context API.
 
-This package offers two higher-order components: `propsToContext` to populate a context provider with existing props, and `contextToProps` if you prefer to consume context with a HoC or want to consume context within a `compose` function.
+This package offers two higher-order components: `propsToContext` to populate a context provider with existing props, and `contextToProps` if you prefer to consume context with a HoC (for example within a `compose` function).
 
 ## API
 
 ### :zap: `propsToContext(Provider, config?)(BaseComponent)`
 
-Wraps your component with the specified `Provider`, and sends the component's props into context. By default, all props will be included in context; you can optionally define a list of props to include, or an object with a list of props to exclude.
+Wraps your component with the specified `Provider`, and sends the component's props into context. By default, all props will be included in context; you can optionally define a list of props to include, or a function to map the props manually.
 
 *   `Provider`: a React context provider, returned by `React.createContext`
 *   `config`:
     * An array of prop keys to sent to context.
 
-    Example: `propsToContext(Provider, ['someProp'])(Component)`
+        Example: `propsToContext(Provider, ['propToInclude'])(Component)`
 
-    * An object containing an array of prop keys to exclude (all props _not_ in this array would then be sent to context).
+    * A function mapping props to context.
 
-    Example: `propsToContext(Provider, { exclude: ['someProp'] })(Component)`
+        Example: `propsToContext(Provider, ({ propToIgnore, ...otherProps }) => otherProps)(Component)`
 
 ### :zap: `contextToProps(Consumer)(BaseComponent)`
 
