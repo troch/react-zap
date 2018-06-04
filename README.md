@@ -1,3 +1,8 @@
+[![npm version](https://badge.fury.io/js/react-zap.svg)](http://badge.fury.io/js/react-zap)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/troch/react-zap.svg)](https://travis-ci.org/troch/react-zap)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
 # react-zap
 
 :zap: Zap props from one React component to another! :zap:
