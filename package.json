@@ -1,6 +1,6 @@
 {
     "name": "react-zap",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Zap props from a component to another, using the new context API!",
     "main": "index.js",
     "jsnext:main": "index.es.js",
