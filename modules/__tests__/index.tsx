@@ -60,7 +60,7 @@ describe('react-zap', () => {
                 const Spy = jest.fn().mockReturnValue(null)
                 const context = { name: 'foo', surname: 'bar' }
                 const Consumer = props => props.children(context)
-                const Component = contextToProps<{}, P>(Consumer)(Spy)
+                const Component = contextToProps<{}, P, {}>(Consumer)(Spy)
 
                 mount(<Component />)
 
@@ -73,9 +73,10 @@ describe('react-zap', () => {
                 const Spy = jest.fn().mockReturnValue(null)
                 const context = { name: 'foo', surname: 'bar' }
                 const Consumer = props => props.children(context)
-                const Component = contextToProps<{}, P>(Consumer, 'myContext')(
-                    Spy
-                )
+                const Component = contextToProps<{}, P, {}>(
+                    Consumer,
+                    'myContext'
+                )(Spy)
 
                 mount(<Component />)
 
@@ -92,14 +93,16 @@ describe('react-zap', () => {
                     keep: 'baz',
                     ignore: true
                 }
-                const mapToProps = (({ name, ignore, ...props }) => ({
-                    rename: name,
-                    ...props
-                })) as ((props: any) => P)
+                const mapToProps = ((props, { name, ignore, ...context }) => ({
+                    ...props,
+                    ...context,
+                    rename: name
+                })) as ((context: any, props: any) => {})
                 const Consumer = props => props.children(context)
-                const Component = contextToProps<{}, P>(Consumer, mapToProps)(
-                    Spy
-                )
+                const Component = contextToProps<{}, P, {}>(
+                    Consumer,
+                    mapToProps
+                )(Spy)
 
                 mount(<Component />)
 
