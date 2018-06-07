@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-export default function contextToProps<P, C>(
+export default function contextToProps<P, C, MergedP>(
     Consumer: React.ComponentType<React.ConsumerProps<C>>,
-    config?: string | ((props: P) => C)
+    config?: string | ((props: P, context: C) => MergedP)
 ) {
     return (
         BaseComponent: React.ComponentType<P & C>
@@ -14,14 +14,14 @@ export default function contextToProps<P, C>(
                 if (typeof config === 'function') {
                     this.mergeToProps = config
                 } else if (config) {
-                    this.mergeToProps = (context, props) => ({
+                    this.mergeToProps = (props, context) => ({
                         ...props,
                         [config]: context
                     })
                 }
             }
 
-            public mergeToProps = (context, props) => ({ ...props, ...context })
+            public mergeToProps = (props, context) => ({ ...props, ...context })
 
             public render() {
                 return (
@@ -29,7 +29,7 @@ export default function contextToProps<P, C>(
                         {context =>
                             React.createElement(
                                 BaseComponent,
-                                this.mergeToProps(context, this.props)
+                                this.mergeToProps(this.props, context)
                             )
                         }
                     </Consumer>
