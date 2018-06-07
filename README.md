@@ -37,9 +37,19 @@ Wraps your component with the specified `Provider`, and sends the component's pr
 
         Example: `propsToContext(Provider, ({ propToIgnore, ...otherProps }) => otherProps)(Component)`
 
-### :zap: `contextToProps(Consumer)(BaseComponent)`
+### :zap: `contextToProps(Consumer, config?)(BaseComponent)`
 
-Wraps your component with the specified `Consumer`, spreading the context into its props.
+Wraps your component with the specified `Consumer`, and sends the context into its props. By default, the context will be spread into the component's props; you can optionally define a prop key for the context object, or a function to map to props manually.
+
+*   `Consumer`: a React context consumer, returned  by `React.createContext`
+*   `config`:
+    * A string, to be used as a prop key for the context object.
+
+        Example: `contextToProps(Consumer, 'allContext')(Component)`
+
+    * A function mapping context to props.
+
+        Example: `contextToProps(Consumer, ({ contextToIgnore, ...otherContexts }) => otherContexts)(Component)`
 
 ## Examples
 

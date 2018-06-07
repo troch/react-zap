@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { render } from 'enzyme'
+import { render, mount } from 'enzyme'
 import { propsToContext, contextToProps } from '../'
 
 interface P {
@@ -55,17 +55,63 @@ describe('react-zap', () => {
     })
 
     describe('contextToProps', () => {
-        it('should set context to props', () => {
-            const { Consumer, Provider } = React.createContext<P>({})
-            const BaseComponent = ({ name }) => <div>{name}</div>
-            const Component = contextToProps<{}, P>(Consumer)(BaseComponent)
-            const output = render(
-                <Provider value={{ name: 'foo' }}>
-                    <Component />
-                </Provider>
-            )
+        describe('when no config is passed', () => {
+            it('should set all context to props', () => {
+                const Spy = jest.fn().mockReturnValue(null)
+                const context = { name: 'foo', surname: 'bar' }
+                const Consumer = props => props.children(context)
+                const Component = contextToProps<{}, P>(Consumer)(Spy)
 
-            expect(output.html()).toContain('foo')
+                mount(<Component />)
+
+                expect(Spy).toHaveBeenCalledWith(context, {})
+            })
+        })
+
+        describe('when a string is passed as config', () => {
+            it('should set the context to the defined prop key', () => {
+                const Spy = jest.fn().mockReturnValue(null)
+                const context = { name: 'foo', surname: 'bar' }
+                const Consumer = props => props.children(context)
+                const Component = contextToProps<{}, P>(Consumer, 'myContext')(
+                    Spy
+                )
+
+                mount(<Component />)
+
+                expect(Spy).toHaveBeenCalledWith({ myContext: context }, {})
+            })
+        })
+
+        describe('when a function is passed as config', () => {
+            it('should use the custom map function', () => {
+                const Spy = jest.fn().mockReturnValue(null)
+                const context = {
+                    name: 'foo',
+                    surname: 'bar',
+                    keep: 'baz',
+                    ignore: true
+                }
+                const mapToProps = (({ name, ignore, ...props }) => ({
+                    rename: name,
+                    ...props
+                })) as ((props: any) => P)
+                const Consumer = props => props.children(context)
+                const Component = contextToProps<{}, P>(Consumer, mapToProps)(
+                    Spy
+                )
+
+                mount(<Component />)
+
+                expect(Spy).toHaveBeenCalledWith(
+                    {
+                        keep: 'baz',
+                        rename: 'foo',
+                        surname: 'bar'
+                    },
+                    {}
+                )
+            })
         })
     })
 })
