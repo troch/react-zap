@@ -42,7 +42,7 @@ Wraps your component with the specified `Provider`, and sends the component's pr
 Wraps your component with the specified `Consumer`, and sends the context into its props. By default, the context will be spread into the component's props; you can optionally define a prop key for the context object, or a function to map to props manually.
 
 *   `Consumer`: a React context consumer, returned  by `React.createContext`
-*   `config`:
+*   `config` (optional):
     * A string, to be used as a prop key for the context object.
 
         Example: `contextToProps(Consumer, 'allContext')(Component)`
