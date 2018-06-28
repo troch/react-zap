@@ -1,6 +1,6 @@
 {
     "name": "react-zap",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Zap props from a component to another, using the new context API!",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -33,6 +33,7 @@
         "@types/enzyme": "~3.1.10",
         "@types/jest": "~22.2.3",
         "@types/react": "~16.3.14",
+        "conventional-changelog-cli": "^2.0.1",
         "enzyme": "~3.3.0",
         "enzyme-adapter-react-16": "~1.1.1",
         "husky": "~0.14.3",
