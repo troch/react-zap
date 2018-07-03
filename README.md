@@ -66,7 +66,7 @@ const initialState = {
 
 const {
     Provider: StateProvider,
-    Consumer: stateConsumer
+    Consumer: StateConsumer
 } = React.createContext(initialState)
 
 export { initialState, StateProvider, StateConsumer }
@@ -76,6 +76,7 @@ Given an imaginary `ViewComponent`, we will set our state in context using `prop
 
 ```js
 import React from 'react'
+import { propsToContext } from 'react-zap'
 import { withState } from 'react-state-hoc'
 
 import { initialState, StateProvider } from './context'
@@ -145,6 +146,7 @@ The same logic applies with a higher-order component like `connect` from the `re
 
 ```js
 import React from 'react'
+import { propsToContext } from 'react-zap'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import ViewComponent from './ViewComponent'
